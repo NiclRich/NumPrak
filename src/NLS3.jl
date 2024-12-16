@@ -2,9 +2,21 @@ using LinearAlgebra
 using SparseArrays
 using Plots
 
-function schroedingereq(init_val::Function, dx, dt)
+function schroedingereq(init_val::Function, dx, dt; a=-30, b=30)
     epsilon = 1e-7
     lambda = -2
+    T = 6.0
+
+    # # compute the number points  in space such that (b-a) / dx is an 
+	# # integer. The stepsize dx will be corrected and sightly decreased.
+	# J = ceil(Int64, 0.5 * (b-a) / dx) # compute the number of cells
+	# dx = (b-a) / J 
+
+	# # Compute the number of points in the time dimension. The implicit
+	# # assumption is that the time starts at 0
+	# K = ceil(Int64, T / dt)
+	# dt = T / K 
+
     J = Int(30.0 / dx)
     T  = 6.0
     K = Int(T / dt)
@@ -82,12 +94,11 @@ U_true = exact_sol.(xs, ts)
 
 # plot([norm(abs.(U_num[:, k] - U_true[:, k]), Inf) for k in 1:300])
 # plot(xs, [imag.(U_num[:, 50]), abs.(U_true[:, 50])])
-@gif for k in 1:300
-    plot(xs, [abs.(U_num[:, k]), abs.(U_true[:, k])])
-end
-
-# angles_true = angle.(U_true)
-# angles_num = angle.(U_num)
 # @gif for k in 1:300
-#     plot([angles_true[:,k], angles_num[:, k]])
+#     plot(xs, [abs.(U_num[:, k]), abs.(U_true[:, k])])
 # end
+
+# Check the conservation laws
+first_conservation = sum(abs2, U_num, dims=1)
+out = sum([1 2 3])
+plot(ts, first_conservation)
