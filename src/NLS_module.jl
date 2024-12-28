@@ -1,6 +1,6 @@
 module NLS
 
-export schroedingereq, first_conservation, second_conservation, explicit_NLS
+export schroedingereq, explicit_NLS, first_conservation, second_conservation
 
 using LinearAlgebra
 using SparseArrays
@@ -23,11 +23,11 @@ The Schrödinger equation with non-linearity can be written as:
 i u_t + u_{xx} + \\lambda |u|^2 u = 0
 ```
 with 
-`u` as the function to solve
-`i` the imaginary unit with `i^2 = -1`
-`x` as the spatial variable
-`t` as the time variable
-`\\lambda` as an equation parameter
+- `u` as the function to solve
+- `i` the imaginary unit with `i^2 = -1`
+- `x` as the spatial variable
+- `t` as the time variable
+- `\\lambda` as an equation parameter
 
 The function discretizes the spatial domain with a step size dx and the time 
     domain with a step size dt. It uses a fixed-point iteration to approximate
@@ -36,14 +36,14 @@ The function discretizes the spatial domain with a step size dx and the time
 The spatial domain is fixed with the interval (-30, 30).
 
 # Arguments
-`init_val : Function` : Function which computes the initial values
-`dx : Real` : mesh size in the spatial variable
-`dt : Real` : time step size
+- `init_val : Function` : Function which computes the initial values
+- `dx : Real` : mesh size in the spatial variable
+- `dt : Real` : time step size
 
 # Keyword Arguments
-`lambda : Real` Parameter of the NLS-Equation, default = -2.0
-`epsilon : Real` Error threshold for the fix point iteration, default = 1e-7
-`T : Real` Total simulation time, default = 6.0
+- `lambda : Real` Parameter of the NLS-Equation, default = -2.0
+- `epsilon : Real` Error threshold for the fix point iteration, default = 1e-7
+- `T : Real` Total simulation time, default = 6.0
 
 # Returns
 `U : Matrix{ComplexF64}` : The rows correspond to the spatial value and the columns correspond to the time values
@@ -154,6 +154,7 @@ println("First integral: ", first_integral)
 println("Maximum value: ", max_val)
 println("Minimum value: ", min_val)
 println("Dissipation: ", dissipation)
+```
 """
 function first_conservation(U::Matrix{ComplexF64})
     # assumes that the rows contain the spatial variable and
@@ -173,7 +174,7 @@ Compute the second conserved quantity for a numerical solution of the NLS-equati
 The second conserved quantity is given by:
 ```math
 \\int \\frac{1}{2} |u'|^2 + \\frac{\\lambda}{4}|u|^4 \\; dx
-````
+```
 # Description
 This function calculates the **second integral**, which typically corresponds to the energy-like conservation quantity in numerical schemes, assuming that:
 - Rows of `U` represent the spatial variable.
@@ -212,6 +213,7 @@ println("Second integral: ", second_integral)
 println("Maximum value: ", max_val)
 println("Minimum value: ", min_val)
 println("Dissipation: ", dissipation)
+```
 """
 function second_conservation(U::Matrix{ComplexF64}, dx::Real, lambda::Real)
     # assumes that the rows contain the spatial variable and

@@ -1,21 +1,18 @@
 # Numerik Praktikum
 
 Contributor(s):
-- TODO: Insert
+- R. Bartel
+- G. Funke
+- N. Richter
 
-## Aufgabenstellung
-TODO: Insert
+# Running the code
+To get a copy of the code, you can either clone this repository or download as a zip-file
+[here](https://github.com/NiclRich/NumPrak/archive/refs/heads/main.zip).
 
-## TODO List
+To run the code, enter in your terminal the following commands:
+```bash
+chmod +x start.sh
+./start.sh
+```
 
-## Coding
-Damit es nicht zu zuvielen Verwirrungen kommt, wird der Style Guide
-von Julia verwendet, dieser ist [hier](https://docs.julialang.org/en/v1/manual/style-guide/)
-zu finden.
-
-Der Code sollte dokumentiert werden, damit dieser später wieder verwendet werden
-kann. Wie man dies macht, findet man in der Julia Dokumentation
-[hier](https://docs.julialang.org/en/v1/manual/documentation/).
-
-Es wird Git und Github für die Code-Verwaltung genutzt. Eine Einführung dazu
-findet man [hier](How-to-git.md).
+This executes the Julia code for the Nonlinear Schrödinger equation and opens the documentation.
