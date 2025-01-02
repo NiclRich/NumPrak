@@ -13,6 +13,9 @@ if command -v julia &> /dev/null; then
         echo "Error: Julia file $julia_file does not exist."
         exit 1
     fi
+    mkdir -p plots
+    mv ./*gif plots/
+    mv ./*png plots/
 
     # Open local documentation
     doc_file="./docs/build/index.html" # Replace with the relative path to your local HTML documentation

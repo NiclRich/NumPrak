@@ -54,15 +54,20 @@ Auch kann mit numerischen Experimenten nur eine Konvergenz der Differenz der Nor
 beobachtet werden, während Norm der Differenz recht hoch ist und das Verfahren gegen
 eine andere Lösung konvergiert als die Testlösung. Im Paper [1] wird die Konvergenz
 behauptet, aber nicht bewiesen.
+
+Wir sehen auch, dass eine geringer Fehlertoleranz bei der Fixpunktiteration einen besseren
+Werten der Erhaltungssätze führt.
 ## Visualisierung
 ![Absolutwerte der Lösungen](./gifs/NLS_abs.gif)
 ![Realwerte der Lösungen](./gifs/NLS_real.gif)
 ![Imaginärwerte der Lösungen](./gifs/NLS_imag.gif)
+![Energiedissipation in Abhängigkeit von Epsilon](./gifs/eps-diss.png)
 
 ## Transparenz-Hinweis KI
 Der Code für die NLS-Gleichung wurde ohne Zurhilfenahme von KI erstellt. Die Dokumentation
 des Codes und das Bash-Skript zur Ausführung wurden mit Hilfe von ChatGPT erstellt und
-menschlich nochmal geprüft.
+menschlich nochmal geprüft und ggf. angepasst.
+
 ## Referenzen
 [1] M. Delfour, M. Fortin, G. Payre: Finite Difference Solutions of a Non-linear Schrödinger equation. Journal of Computational Physics 44, 277-288 (1981)
 [Journal](https://www.sciencedirect.com/science/article/abs/pii/0021999181900528)

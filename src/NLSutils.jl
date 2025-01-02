@@ -10,6 +10,51 @@ exact_sol(x,t) = 1.5 .* exp.(im .* (1.25 .* t - x )) .* sech.(1.5 .* (x .+ 5) .-
 # NLS-equation
 init(x) = exact_sol(x, 0)
 
+"""
+    create_gif(U_num, U_true, title::String, dt::Real, T::Real, filename::String; projection = "abs")
+
+Creates an animated GIF that compares a numerical solution to an exact solution over time.
+
+# Arguments
+- `U_num`: A matrix representing the numerical solution. Each column corresponds to a snapshot in time, and each row represents a spatial point.
+- `U_true`: A matrix representing the exact solution, structured similarly to `U_num`.
+- `title::String`: The title of the animation.
+- `dt::Real`: The time step size used in the simulation.
+- `T::Real`: The total simulation time.
+- `filename::String`: The name of the output GIF file (e.g., `"output.gif"`).
+
+# Keyword Arguments
+- `projection::String`: Specifies how to project the data for visualization. Accepted values are:
+  - `"abs"`: Absolute value of the solution (default).
+  - `"real"`: Real part of the solution.
+  - `"imag"`: Imaginary part of the solution.
+
+# Behavior
+- The x-axis corresponds to spatial points ranging from -30 to 30.
+- The y-axis corresponds to the solution values (`U_num` and `U_true`).
+- At each time step, the plot compares the numerical solution (`U_num`) with the exact solution (`U_true`).
+- A dynamic annotation shows the current time step (`t`) on the plot.
+- The y-axis limits are adjusted based on the specified `projection`.
+
+# Output
+- Generates and saves an animated GIF to the specified `filename`.
+
+# Example
+```julia
+U_num = randn(100, 50)  # Simulated numerical solution (100 spatial points, 50 time steps)
+U_true = randn(100, 50)  # Simulated exact solution
+title = "Numerical vs. Exact Solution"
+dt = 0.1
+T = 5.0
+filename = "solution_comparison.gif"
+
+create_gif(U_num, U_true, title, dt, T, filename, projection="real")
+```
+
+# Notes
+Ensure the `Plots.jl` package is installed and `@animate` macro is available.
+Valid projections are enforced; an error is thrown if an unknown value is provided.
+"""
 function create_gif(U_num, U_true, title::String, dt::Real, T::Real, filename::String; projection = "abs")
     x_label = "x"
     y_label = "u(x,t)"
@@ -66,9 +111,6 @@ function create_gif(U_num, U_true, title::String, dt::Real, T::Real, filename::S
                   text("t = $(round(time, digits=2))", :right, 10))
     end
 
-    gif(anim, filename)
+    gif(anim, filename);
 end
-
-# create_gif(rand(10, 10), rand(10, 10), "Test", 0.1, 1.0)
-
 end
