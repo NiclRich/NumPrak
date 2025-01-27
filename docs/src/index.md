@@ -22,9 +22,9 @@ welches implementiert wird. Allerdings wird in diesem Paper nicht die Konvergenz
 Schemas gezeigt und numerisch kann dies auch nicht beobachtet werden. Allerdings erhält
 es die beiden oben genannten Größen.
 
-Eine Lösung zum Testen ist gegeben mit
+Eine Lösung für den Parameter $\lambda = -2$ ist zum Testen gegeben mit
 ```math
-u(x,t) = \frac{3}{2}\exp\left(i(2x - \frac{7}{4}t)\right) sech\left(\frac{3}{2}(x+5) - 6t\right).
+u(x,t) = \frac{3}{2}\exp\left(i(\frac{5}{4}t - x)\right) sech\left(\frac{3}{2}(x+5) - 3t\right).
 ```
 
 Das Schema in [1] wird verglichen mit dem expliziten Schema
@@ -46,7 +46,7 @@ Der Code kann ausgeführt werden, indem die Datei `NLS.jl` im Ordner `src` ausge
 ## Ergebnisse
 Das Finite Differenzen Schema aus [1] erhält die beiden oben genannten Größen, während das
 explizite Finite Differenzen Schema diese nicht erhält. Weiterhin konnte beobachtet werden,
-dass das explizite Verfahren sehr instabil ist und nur für sehr kleine Gittweiten und noch
+dass das explizite Verfahren sehr instabil ist und nur für sehr kleine Gitterweiten und noch
 kleinere Zeitschritte plausible Werte liefert. Das explizite Verfahren erhält auch keine der
 beiden Erhaltungsgrößen.
 

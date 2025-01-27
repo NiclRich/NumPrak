@@ -91,6 +91,8 @@ create_gif(U_num_DFP, U_true, "Absolute value of solution", dt_dfp, T_dfp, "NLS_
 create_gif(U_num_DFP, U_true, "Real part of solution", dt_dfp, T_dfp, "NLS_real.gif"; projection = "real")
 create_gif(U_num_DFP, U_true, "Imaginary part of solution", dt_dfp, T_dfp, "NLS_imag.gif"; projection = "imag")
 
+
+
 # create plot of epsilon parameter with energy dissipatation
 
 exponent = 8 # absolute value of the smallest exponent of epsilon
