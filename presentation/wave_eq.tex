@@ -1,0 +1,272 @@
+\documentclass{beamer}
+% Option [handout] in der Beamer-Klasse fuehrt dazu, dass alles gleich 
+% aufgedeckt ist. Nuetzlich, falls die Folien verschickt oder gedruckt 
+% werden sollten
+
+%----TITEL----------------------------------------------------------%
+\author[Barthel, Funke, Richter]{R. Barthel, G. Funke, N. Richter}
+\title[Finite Differenzen Methode f\"ur die Schr\"odinger Gleichung]{Finite Differenzen Methode f\"ur\\ die Schr\"odinger Gleichung}
+\institute[Numerik-Praktikum 24/25]{Numerisches Praktikum\\
+                    WS 2024/2025\\
+                      Universit\"at Leipzig}
+\date[WS 2025]{3.\ Februar 2025}
+
+
+%-------------------------------------------------------------------%
+
+
+%-----OPTIONEN BEAMER-----------------------------------------------%
+\usetheme{default}
+
+\setbeamertemplate{headline}{}
+\setbeamertemplate{footline}{%
+         \phantom{x}\hspace{5pt} \insertshortauthor  
+         \qquad\qquad \insertshorttitle 
+         \qquad\qquad\qquad \insertshortdate 
+         \hfill S.\,\insertframenumber\phantom{xy}\vskip3pt}
+\usefonttheme[onlymath]{serif}
+%-------------------------------------------------------------------%
+
+\usepackage{amsmath,amsthm,amsfonts,amssymb}
+
+\usepackage[ngerman]{babel}
+%\usepackage[utf8x]{inputenc}  % in alten Latex-Versionen fuer die Eingabe z.B. 
+                               % von Umlauten
+
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{tikz}
+\usetikzlibrary{arrows,shapes,positioning}
+
+
+\usepackage{listings}
+\lstset{basicstyle=\scriptsize\ttfamily,frame=lines,breaklines=true}
+
+
+
+
+
+%----------------------- Macros and Definitions --------------------------
+
+ \definecolor{mycyan}{rgb}{0.0, 1.0, 1.0}
+
+% hier koennen Befehle definiert werden
+\newcommand{\Div}{\operatorname{div}}
+
+
+\begin{document}
+
+
+
+%%%%%%%% Titlepage%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\frame{\titlepage}
+%%%%%%% Introductory slides%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\frametitle{Inhalt}
+\tableofcontents
+\end{frame}
+
+\section{Aufgabenstellung}
+
+\begin{frame}
+    \frametitle{Problemstellung}
+
+    Die Schrödinger Gleichung auf $\mathbb{R}$ ist gegeben durch
+    \begin{align*}
+        iu_t - u'' + \lambda |u|^2u &= 0 \\
+        u(x,0) &= \phi(x)
+    \end{align*}
+    
+    mit $u:\mathbb{R}\times\mathbb{R}\to\mathbb{C}$, $\phi:\mathbb{R}\to\mathbb{C}$ und $\lambda\in\mathbb{R}$\\
+    \ \\
+    Im Folgenden gilt:
+    \begin{itemize}
+        \item $\lambda = -2$
+        \item $u(x,t)=\frac{3}{2}\exp(i(\frac{5}{4}t-x))\text{sech}(\frac{3}{2}(x+5)-3t)$
+        \item $\phi(x)=u(x,0)$
+    \end{itemize}
+    %Lösungen erhalten die folgenden Energien
+    %\begin{align*}
+    %    \int_\mathbb{R} |u|^2 dx &= \text{const}\\
+    %    \int_\mathbb{R} \frac{1}{2}|u'|^2 + \frac{\lambda}{4}|u|^4 dx &= \text{const}
+    %\end{align*}
+\end{frame}
+
+%Herleitung für Diskretisierung?
+
+\begin{frame}
+    \frametitle{Diskretisierung}
+
+    Sein $\Delta t, \Delta x>0$ mit $J=\frac{30}{\Delta x},K=\frac{6}{\Delta t}\in\mathbb{N}$.\\
+    Approximiere $u(j\Delta x, k\Delta t)$ durch $U_j^k$ f\"ur $j=-J, .. , J,\ k=0, .. , K$\\
+    \ \\
+    Startbedingung: $U_j^0=\phi(j\Delta x)\ \forall j\in\{-J, -J+1, .., J\}$\\
+    Randbedingung: $U_{-J}^k=U_{J}^k=0\ \forall k\in\{0, .., K\}$\\
+    Itteration:
+    \begin{align*}
+        i\frac{1}{\Delta t}(U^{k+1}-U^k)+\frac{1}{2|\Delta x|^2}(AU^{k+1}+AU^k)+F_k(U^{k+1})=0
+    \end{align*}
+    mit
+    \begin{align*}
+        (F_k(U))_j = \frac{\lambda}{4}(|U_j|^2+|U_j^k|^2)(U_j+U_j^k)
+    \end{align*}
+
+    
+
+\end{frame}
+
+
+%\begin{frame}
+%    \frametitle{Gezeichnetes Bild}
+%    
+%    \begin{minipage}{0.65\textwidth}
+%        Bei der Erkl\"arung kann ein Bild n\"utzlich sein.
+%        Dieses hier wurde mit dem Paket tikz erstellt.
+%    \end{minipage}
+%    \hfill
+%    \begin{minipage}{0.2\textwidth}
+%        \begin{tikzpicture}[x=7.5mm,y=12.5mm]
+%            \draw (0,0)--(1,1)--(2,0)--cycle;
+%            \foreach \a/\b in {0/0,1/1,2/0}
+%                { \fill (\a,\b) circle (2pt); }
+%        \end{tikzpicture}
+%    \end{minipage}
+%\end{frame}
+
+
+
+
+\section{Implementation}
+
+%\begin{frame}[fragile]
+%    \frametitle{Implementierung}
+%    
+%    Der Algorithmus ist wie folgt implementiert
+%\begin{lstlisting}[numbers=none]   
+%xneu = xalt - f(xalt)/df(xalt);
+%k = k+1;
+%\end{lstlisting}
+%\end{frame}
+
+
+
+\section{Numerische Ergebnisse}
+
+%\begin{frame}
+%    \frametitle{Numerische Ergebnisse -- Tabelle}
+%    
+%    \begin{center} %zentriert die Tabelle 
+%    \begin{tabular}{l|cc|r} % erstellt eine Tabelle mit 4 Spalten, 
+%                            % die erste ist linksbuendig, die zweite 
+%                            % und dritte zentriert, die letzte
+%                            % rechtsbuendig.
+%                            % Nach der ersten und dritten Spalte ist ein 
+%                            % vertikaler Strich
+%        Parameter 1 & Ergebnis 1 & Ergebnis 2& Ergebnis 3 \\
+%        \hline % fuegt horizontale Linie ein
+%        2 & 0.5 & 0.4 & 0.3\\
+%        3 & 0.5 & 0.4 & 0.1\\
+%        5 & 0.2 & 0.4 & 0.3\\
+%    \end{tabular}
+%    \end{center}
+%\end{frame}
+
+%\begin{frame}
+%    \frametitle{Numerische Ergebnisse -- externe Abbildung}
+%    
+%    \begin{figure}
+%        \begin{center}
+%            \includegraphics[width=0.7\textwidth]{Lerche-mit-koordinatensystem}
+%        \end{center}
+%    \end{figure}
+%
+%    
+%    
+%\end{frame}
+
+
+%\begin{frame}
+%    \frametitle{Numerische Ergebnisse -- Abbildung mit tikz}
+%    
+%    % Daten sind in Datei errors4tikz gespeichert
+%    
+%    \begin{figure}
+%        \begin{center}
+%            \begin{tikzpicture}[scale=0.9]
+%                \begin{loglogaxis}[ymin=1e-5, ymax=1, xmin=1e0, xmax=1e5,
+%                    legend pos=south west,legend cell align=left,legend style={fill=none}]
+%                    \pgfplotsset{
+%                    legend style={
+%                    at={(-0.2,.5)}, anchor=east},
+%                    font=\sffamily\scriptsize,
+%                    xlabel=ndof,ylabel=error % add labels to x and y axis
+%                    }
+%                    %
+%                    \addplot[solid,black,mark=square] table[x=ndofs,y=errors1] {errors4tikz.dat};
+%                    \addlegendentry{ $\|\nabla(u-u_h)\|_{L^2(\Omega)}$}
+%                    %
+%                    \addplot[dashed,black, mark=triangle,mark options={solid}] table[x=ndofs,y=errors2] {errors4tikz.dat};
+%                    \addlegendentry{ $\|\nabla(u-w_h)\|_{L^2(\Omega)}$}
+%                    % add slope triangle
+%                    \draw (axis cs:10,1e-4)--(axis cs:1000,1e-4)
+%                                -- (axis cs:10,1e-2)
+%                                -- cycle;
+%                    \node at (axis cs: 100, 1e-4) [below] {$1$};
+%                    \node at (axis cs: 10, 1e-3) [left] { $1$};
+%                    %
+%                \end{loglogaxis}
+%            \end{tikzpicture}
+%        \end{center}
+%        \caption{\label{f:convhistory}Ein Konvergenzplot.}
+%    \end{figure}
+%\end{frame}
+
+
+
+\section{Schlu{\ss}folgerungen}
+
+%\begin{frame}
+%    \frametitle{Schlu{\ss}folgerungen}
+%    \begin{itemize}
+%     \item Verfahren A ist effizienter als Verfahren B
+%     \item Beide Verfahren liefern gute Ergebnisse
+%    \end{itemize}
+%\end{frame}
+
+
+%\begin{frame}
+%    \frametitle{Weiteres}
+%    \begin{itemize}
+%        \item Beachten Sie Warnungen und badboxes (z.b.
+%            \emph{Overfull hbox} hei{\ss}t, dass der Text/das Bild/die Tabelle
+%             zu breit ist, \emph{Overfull vbox}, dass es in vertikaler Richtung
+%             zu gro{\ss} ist)
+%        \item<2> Aufs Wesentliche reduzieren: Grober Anhaltspunkt zur Planung des
+%            Vortrags: etwa 2 Minuten pro Folie
+%    \end{itemize}
+%
+%\end{frame}
+
+
+
+
+%\begin{frame}
+%    \frametitle{Literatur}
+%
+%    \visible<1->{
+%        \bigskip
+%        {\scriptsize
+%            \begin{thebibliography}{x}
+%                \bibitem{hermann2011}
+%                    M. Hermann.
+%                    \newblock Numerische Mathematik.
+%                    \newblock M\"unchen: Oldenbourg Verlag, 3.\ \"uberarb.\ und erw.\ Aufl., 2011.
+%            \end{thebibliography}
+%        }
+%    }
+%
+%    \label{page:end}
+%\end{frame}
+
+\end{document}
