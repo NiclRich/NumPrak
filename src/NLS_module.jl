@@ -323,7 +323,7 @@ function explicit_NLS(init_val::Function, dx::Real, dt::Real; lambda::Real = -2.
             U[:, k+1] = Uk1
         end
         if k % proportion == 0 & k != 1
-            Uk = deepcopy(U[:, k])
+            Uk = deepcopy(U[:, k+1])
         else
             Uk = Uk1
         end

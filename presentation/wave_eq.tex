@@ -27,7 +27,7 @@
 \usefonttheme[onlymath]{serif}
 %-------------------------------------------------------------------%
 
-\usepackage{amsmath,amsthm,amsfonts,amssymb}
+\usepackage{amsmath,amsthm,amsfonts,amssymb,graphicx,animate}
 
 \usepackage[ngerman]{babel}
 %\usepackage[utf8x]{inputenc}  % in alten Latex-Versionen fuer die Eingabe z.B. 
@@ -37,7 +37,6 @@
 \pgfplotsset{compat=1.18}
 \usepackage{tikz}
 \usetikzlibrary{arrows,shapes,positioning}
-
 
 \usepackage{listings}
 \lstset{basicstyle=\scriptsize\ttfamily,frame=lines,breaklines=true}
@@ -86,14 +85,53 @@
         \item $u(x,t)=\frac{3}{2}\exp(i(\frac{5}{4}t-x))\text{sech}(\frac{3}{2}(x+5)-3t)$
         \item $\phi(x)=u(x,0)$
     \end{itemize}
-    %Lösungen erhalten die folgenden Energien
-    %\begin{align*}
-    %    \int_\mathbb{R} |u|^2 dx &= \text{const}\\
-    %    \int_\mathbb{R} \frac{1}{2}|u'|^2 + \frac{\lambda}{4}|u|^4 dx &= \text{const}
-    %\end{align*}
 \end{frame}
 
 %Herleitung für Diskretisierung?
+
+\begin{frame}
+    \frametitle{Herleitung}
+
+    Zeitzentrierte impliziete diskretisierung {\small(Crank-Nicolson/Trapezregel in Zeit)}:
+
+    Sein $\Delta t, \Delta x>0$.
+    Approximiere $\partial_t u = \partial_x^2 u - \lambda |u|^2u$ zur Zeit $\Delta t (k+\frac{1}{2})$ im Ort $\Delta x j$ durch
+    \begin{align*}
+        \frac{U^{k+1}_j-U^{k}_j}{\Delta t} &= \frac{1}{2}(\frac{U^{k}_{j+1}-2U^{k}_j+U^{k}_{j-1}}{\Delta x}+\frac{U^{k+1}_{j+1}-2U^{k+1}_j+U^{k+1}_{j-1}}{\Delta x})\\
+        &\quad\qquad -\frac{\lambda}{2}(|U^{k+1}_j|^2U^{k+1}_j+|U^{k}_j|^2U^{k}_j)
+    \end{align*}
+    Dabei ist
+    \begin{align*}
+        \frac{\lambda}{2}(|U^{k+1}_j|^2U^{k+1}_j+|U^{k}_j|^2U^{k}_j) \approx \frac{\lambda}{4}(|U^{k+1}_j|^2+|U_j^k|^2)(U^{k+1}_j+U_j^k)
+    \end{align*}
+    
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Herleitung}
+
+    Zusammenfassen der Ortskomponenten und umschreiben mit 
+    \begin{align*}
+        A = \begin{bmatrix}
+            2  & -1 &  0  &  \cdots  & 0 \\
+            -1  & 2 &  -1  &  \cdots  & 0 \\
+            0  & -1 &  2  &  \ddots  & 0 \\
+            \vdots & \vdots & \ddots & \ddots & -1 \\
+            0 & 0 & 0 & -1 & 2\\
+        \end{bmatrix}
+    \end{align*}
+    liefert
+    \begin{align*}
+        i\frac{1}{\Delta t}(U^{k+1}-U^k)&+\frac{1}{2|\Delta x|^2}(AU^{k+1}+AU^k)+F_k(U^{k+1})=0\\
+        (F_k(U))_j &= \frac{\lambda}{4}(|U_j|^2+|U_j^k|^2)(U_j+U_j^k)
+    \end{align*}
+    Dies kann umgeschrieben werden zu
+    \begin{align*}
+        U^{k+1} = (\frac{i}{\Delta t}I + \frac{A}{2\Delta x^2})^{-1}((\frac{i}{\Delta t}I - \frac{A}{2\Delta x^2})U^k - F_k(U^{k+1}))
+    \end{align*}
+
+\end{frame}
 
 \begin{frame}
     \frametitle{Diskretisierung}
@@ -103,19 +141,72 @@
     \ \\
     Startbedingung: $U_j^0=\phi(j\Delta x)\ \forall j\in\{-J, -J+1, .., J\}$\\
     Randbedingung: $U_{-J}^k=U_{J}^k=0\ \forall k\in\{0, .., K\}$\\
-    Itteration:
+    Fixpunktitteration:
     \begin{align*}
-        i\frac{1}{\Delta t}(U^{k+1}-U^k)+\frac{1}{2|\Delta x|^2}(AU^{k+1}+AU^k)+F_k(U^{k+1})=0
+        U_p = (\frac{i}{\Delta t}I + \frac{A}{2\Delta x^2})^{-1}((\frac{i}{\Delta t}I - \frac{A}{2\Delta x^2})U^k - F_k(U_p))
     \end{align*}
-    mit
+    mit $| U_{i+1}-U_{i} |<\epsilon$ als Abbruchskriterium und
     \begin{align*}
         (F_k(U))_j = \frac{\lambda}{4}(|U_j|^2+|U_j^k|^2)(U_j+U_j^k)
     \end{align*}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Eine Lösung}
+
+    %Insert NLS_abs.gif here
+
+\end{frame}
+
+\section{Energieerhaltung}
+
+\begin{frame}
+    \frametitle{Energie}
+
+    Erhaltungsgößen von Lösungen der PDG
+    \begin{align*}
+        \int_\mathbb{R} |u|^2 dx &= \text{const}\\
+        \int_\mathbb{R} \frac{1}{2}|u'|^2 + \frac{\lambda}{4}|u|^4 dx &= \text{const}
+    \end{align*}
+    \ \\
+    Diskretisierte Energien
+    \begin{align*}
+        \Delta x \sum_{j=-J}^J |U_j^k|^2 &= \Delta x \sum_{j=-J}^J |U_j^0|^2\\
+        \frac{\Delta x}{2} \sum_{j=-J}^{J-1} |\frac{U_{j+1}^k-U_j^k}{\Delta x}|^2+\frac{\lambda}{4}\Delta x \sum_{j=-J}^J |U_j^k|^4 &= \text{const}
+    \end{align*}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Energieverlust}
+
+    \begin{figure}
+        \begin{center}
+            \includegraphics[width=0.7\textwidth]{eps_diss.png}
+        \end{center}
+    \end{figure}
+
+\end{frame}
+
+
+\section{Phasenproblem}
+
+\begin{frame}
+    \frametitle{Das Problem:}
+
+    %NLS_real.gif und NLS_imag.gif
+
+\end{frame}
+
+
+\section{Expliziete Lösung}
+
+\begin{frame}
+    \frametitle{<title>}
 
     
 
 \end{frame}
-
 
 %\begin{frame}
 %    \frametitle{Gezeichnetes Bild}

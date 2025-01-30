@@ -95,7 +95,7 @@ create_gif(U_num_DFP, U_true, "Imaginary part of solution", dt_dfp, T_dfp, "NLS_
 
 # create plot of epsilon parameter with energy dissipatation
 
-exponent = 8 # absolute value of the smallest exponent of epsilon
+exponent = 10 # absolute value of the smallest exponent of epsilon
 file_eps_plot = "eps-diss.png"
 conservation1_diss = zeros(exponent)       # store energy dissipatation
 conservation2_diss = zeros(exponent)
