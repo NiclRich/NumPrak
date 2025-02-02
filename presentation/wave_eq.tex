@@ -92,7 +92,7 @@
 \begin{frame}
     \frametitle{Herleitung}
 
-    Zeitzentrierte impliziete diskretisierung {\small(Crank-Nicolson/Trapezregel in Zeit)}:
+    Zeitzentrierte implizite Diskretisierung {\small(Crank-Nicolson)}:
 
     Sein $\Delta t, \Delta x>0$.
     Approximiere $\partial_t u = \partial_x^2 u - \lambda |u|^2u$ zur Zeit $\Delta t (k+\frac{1}{2})$ im Ort $\Delta x j$ durch
@@ -140,7 +140,8 @@
     Approximiere $u(j\Delta x, k\Delta t)$ durch $U_j^k$ f\"ur $j=-J, .. , J,\ k=0, .. , K$\\
     \ \\
     Startbedingung: $U_j^0=\phi(j\Delta x)\ \forall j\in\{-J, -J+1, .., J\}$\\
-    Randbedingung: $U_{-J}^k=U_{J}^k=0\ \forall k\in\{0, .., K\}$\\
+    %Randbedingung: $U_{-J}^k=U_{J}^k=0\ \forall k\in\{0, .., K\}$\\
+    % Randbedingungen sind nicht gegeben
     Fixpunktitteration:
     \begin{align*}
         U_p = (\frac{i}{\Delta t}I + \frac{A}{2\Delta x^2})^{-1}((\frac{i}{\Delta t}I - \frac{A}{2\Delta x^2})U^k - F_k(U_p))
@@ -199,7 +200,7 @@
 \end{frame}
 
 
-\section{Expliziete Lösung}
+\section{Explizite Lösung}
 
 \begin{frame}
     \frametitle{<title>}
